@@ -34,7 +34,12 @@ async function run() {
 
     //Read/ Get
     
-
+      
+    app.get('/', async(req, res) => {
+      const cursor = AssmentCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
     
     app.get('/all', async(req, res) => {
       const cursor = AssmentCollection.find()
