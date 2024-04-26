@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 require('dotenv').config();
 const app = express()
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 5000
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 
@@ -31,6 +31,25 @@ async function run() {
     // await client.connect();
 
     const AssmentCollection = client.db('Mountain').collection('Moun')
+
+    //Read/ Get
+    
+
+    
+    app.get('/all', async(req, res) => {
+      const cursor = AssmentCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
+
+    //Create / Post
+    app.post('/add', async(req, res)=> {
+      const query = req.body;
+      const result = await AssmentCollection.insertOne(query)
+      res.send(result)
+    })
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
