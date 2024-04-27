@@ -3,7 +3,7 @@ const cors = require('cors')
 require('dotenv').config();
 const app = express()
 const port = process.env.PORT || 5000
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 
@@ -47,11 +47,33 @@ async function run() {
       res.send(result)
     })
 
+    app.get('/details/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await AssmentCollection.findOne(query)
+      res.send(result)
+    })
+
+    //myAllArt email
+    app.get("/myCart/:email", async (req, res) => {
+      const email = req.params.email;
+      // console.log(req.params.email)
+      const result = await AssmentCollection.find({email}).toArray();
+      res.send(result)
+    })
 
     //Create / Post
     app.post('/add', async(req, res)=> {
       const query = req.body;
       const result = await AssmentCollection.insertOne(query)
+      res.send(result)
+    })
+
+    //Delete
+    app.delete('/my/:id', async(req, res)=> {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await AssmentCollection.deleteOne(query)
       res.send(result)
     })
 
