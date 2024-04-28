@@ -84,27 +84,27 @@ async function run() {
 
 
     // Update
-    // app.put('/update/:id', async (req, res)=> {
-    //   const id = req.params.id;
-    //   const filter = {_id: new ObjectId(id)}
-    //   const options = {upsert: true}
-    //   const updateCart = req.body;
-    //   const cart = {
-    //     $set: {
-    //       photo: updateCart.photo,
-    //       item: updateCart.item,
-    //       subcategory: updateCart.subcategory,
-    //       short: updateCart.short,
-    //       price: updateCart.price,
-    //       ratting: updateCart.ratting,
-    //       emaxple: updateCart.emaxple,
-    //       time: updateCart.time,
-    //       stock: updateCart.stock
-    //     }
-    //   }
-    //   const result = await AssmentCollection.updateOne(filter, cart, options)
-    //   res.send(result)
-    // })
+    app.put('/update/:id', async (req, res)=> {
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)}
+      const options = {upsert: true}
+      const updateCart = req.body;
+      const cart = {
+        $set: {
+          photo: updateCart.photo,
+          item: updateCart.item,
+          subcategory: updateCart.subcategory,
+          short: updateCart.short,
+          price: updateCart.price,
+          ratting: updateCart.ratting,
+          emaxple: updateCart.emaxple,
+          time: updateCart.time,
+          stock: updateCart.stock
+        }
+      }
+      const result = await AssmentCollection.updateOne(filter, cart, options)
+      res.send(result)
+    })
 
     //Delete
     app.delete('/my/:id', async(req, res)=> {
