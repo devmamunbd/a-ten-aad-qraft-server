@@ -41,12 +41,14 @@ async function run() {
       res.send(result)
     })
     
+    // all art craft
     app.get('/all', async(req, res) => {
       const cursor = AssmentCollection.find()
       const result = await cursor.toArray()
       res.send(result)
     })
 
+    // details page
     app.get('/details/:id', async (req, res) => {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
@@ -62,12 +64,47 @@ async function run() {
       res.send(result)
     })
 
+    
+
     //Create / Post
     app.post('/add', async(req, res)=> {
       const query = req.body;
       const result = await AssmentCollection.insertOne(query)
       res.send(result)
     })
+
+
+    //update get
+    app.get('/update/:id', async (req, res)=> {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await AssmentCollection.findOne(query)
+      res.send(result)
+    })
+
+
+    // Update
+    // app.put('/update/:id', async (req, res)=> {
+    //   const id = req.params.id;
+    //   const filter = {_id: new ObjectId(id)}
+    //   const options = {upsert: true}
+    //   const updateCart = req.body;
+    //   const cart = {
+    //     $set: {
+    //       photo: updateCart.photo,
+    //       item: updateCart.item,
+    //       subcategory: updateCart.subcategory,
+    //       short: updateCart.short,
+    //       price: updateCart.price,
+    //       ratting: updateCart.ratting,
+    //       emaxple: updateCart.emaxple,
+    //       time: updateCart.time,
+    //       stock: updateCart.stock
+    //     }
+    //   }
+    //   const result = await AssmentCollection.updateOne(filter, cart, options)
+    //   res.send(result)
+    // })
 
     //Delete
     app.delete('/my/:id', async(req, res)=> {
